@@ -11,15 +11,6 @@ namespace OOPKR1.Entities
     public delegate TKey KeySelector<TKey>(Magazine mg);
     public class Magazine
     {
-
-        private string _title;
-        private Frequency _frequency;
-        private DateTime _releaseDate;
-        private int _count;
-        private Article[] _articles;
-
-        public List<Person> Editors { get; set; }
-
         public Magazine(string title, Frequency frequency, DateTime releaseDate, int count, Article[] articles, List<Person> editors)
         {
             _title = title;
@@ -40,6 +31,14 @@ namespace OOPKR1.Entities
             Editors = new List<Person>();
         }
 
+        private string _title;
+        private Frequency _frequency;
+        private DateTime _releaseDate;
+        private int _count;
+        private Article[] _articles;
+
+        public List<Person> Editors { get; set; }
+
         public string Title { get => _title; set => _title = value; }
         public Frequency Frequency { get => _frequency; set => _frequency = value; }
         public DateTime ReleaseDate { get => _releaseDate; set => _releaseDate = value; }
@@ -52,7 +51,8 @@ namespace OOPKR1.Entities
 
         public void AddArticles(params Article[] articles)
         {
-            Articles = (List<Article>)Articles.Concat(articles);
+            Articles.AddRange(articles);
+            //Articles = (List<Article>)Articles.Concat(articles);
         }
 
         public override string ToString()
@@ -130,11 +130,14 @@ namespace OOPKR1.Entities
 
         public string ToShortString()
         {
-            return "";
+            return string.Join("\n", Magazines.Values.Select(m =>
+            {
+                return $"Title: {m.Title}, Average Rating: {m.AverageRating}, Editors count: {m.Editors.Count}, Articles count: {m.Articles.Count}";
+            }));
         }
 
-        public double MaxAvarageRating => Magazines.Values.Any() ? Magazines.Values.Max
-            (m => m.Articles.Any() ? m.Articles.Average(a => a.Rating) : 0) : 0;
+        public double MaxAvarageRating => Magazines.Values.Any() ? Magazines.Values.Max(m => 
+            m.Articles.Any() ? m.Articles.Average(a => a.Rating) : 0) : 0;
 
         public IEnumerable<KeyValuePair<TKey, Magazine>> FrequencyGroup(Frequency f) => 
             Magazines.Where(p => p.Value.Articles.Any() && p.Value.Frequency == f);

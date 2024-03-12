@@ -34,7 +34,8 @@ namespace OOPKR1.Entities
             set
             {
                 ArgumentOutOfRangeException.ThrowIfNegative(value, "Недопустимое значение");
-                Count = value;
+                //if (value < 0) throw new Exception("Недопустимое значение");
+                _count = value;
             }
         }
 
@@ -48,7 +49,7 @@ namespace OOPKR1.Entities
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return ReleaseDate.GetHashCode() + Count.GetHashCode() + Title.GetHashCode();
         }
 
         public override string? ToString()
