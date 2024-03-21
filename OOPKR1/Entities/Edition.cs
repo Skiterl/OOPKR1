@@ -22,7 +22,7 @@ namespace OOPKR1.Entities
         public Edition()
         {
             Title = "";
-            ReleaseDate = DateTime.Now;
+            ReleaseDate = new DateTime();
             Count = 0;
         }
 
@@ -43,7 +43,7 @@ namespace OOPKR1.Entities
 
         public override bool Equals(object? obj)
         {
-            if(obj is Edition e) return e.ReleaseDate == ReleaseDate && e.Count == Count && e.Title == Title;
+            if(obj is Edition e) return e.ReleaseDate.Equals(ReleaseDate) && e.Count == Count && e.Title.Equals(Title);
             return false;
         }
 

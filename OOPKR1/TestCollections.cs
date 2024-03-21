@@ -39,7 +39,7 @@ namespace OOPKR1
                 _keyList.Add(element.Key);
                 _valueList.Add(element.Value);
                 _keyDictionary.Add(element.Key, element.Value);
-                _stringDictionary.Add(i.ToString(), element.Value);
+                _stringDictionary.Add(element.Key.ToString(), element.Value);
             }
         }
 
@@ -47,8 +47,13 @@ namespace OOPKR1
         {
             var first = _generateElement(0);
             var middle = _generateElement(_keyList.Count / 2);
-            var last = _generateElement(_keyList.Count);
-            var noExist = _generateElement(_keyList.Count + 1);
+            var last = _generateElement(_keyList.Count-1);
+            var noExist = _generateElement(_keyList.Count);
+
+            Console.WriteLine(first.Value);
+            Console.WriteLine(middle.Value);
+            Console.WriteLine(last.Value);
+            Console.WriteLine(noExist.Value);
 
             Console.WriteLine("First element");
             MeasureElementSearchTime(first);
@@ -66,33 +71,33 @@ namespace OOPKR1
             var sw = new Stopwatch();
             Console.WriteLine("KeyList");
             sw.Start();
-            _keyList.Contains(element.Key);
+            var foundKeyList = _keyList.Contains(element.Key);
             sw.Stop();
-            Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns");
+            Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns, contains: {foundKeyList}, {element.Value}");
 
             Console.WriteLine("ValueList");
             sw.Restart();
-            _valueList.Contains(element.Value);
+            var foundValueList = _valueList.Contains(element.Value);
             sw.Stop();
-            Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns");
+            Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns, contains: {foundValueList}, {element.Value}");
 
             Console.WriteLine("KeyDictionary (ContainsKey)");
             sw.Restart();
-            _keyDictionary.ContainsKey(element.Key);
+            var foundKeyDictionaryKey = _keyDictionary.ContainsKey(element.Key);
             sw.Stop();
-            Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns");
+            Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns, contains: {foundKeyDictionaryKey}, {element.Value}");
 
             Console.WriteLine("StringDictionary");
             sw.Restart();
-            _stringDictionary.ContainsKey(element.Key.ToString());
+            var foundStringDictionary = _stringDictionary.ContainsKey(element.Key.ToString());
             sw.Stop();
-            Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns");
+            Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns, contains: {foundStringDictionary}, {element.Value}");
 
             Console.WriteLine("KeyDictionary (ContainsValue)");
             sw.Restart();
-            _keyDictionary.ContainsValue(element.Value);
+            var foundKeyDictionaryValue = _keyDictionary.ContainsValue(element.Value);
             sw.Stop();
-            Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns");
+            Console.WriteLine($"{sw.Elapsed.TotalNanoseconds} ns, contains: {foundKeyDictionaryValue}, {element.Value}");
         }
     }
 }

@@ -86,6 +86,11 @@ namespace OOPKR1.Entities
             //_articles = [.. Articles];
             Array.Sort(_articles, (a1, a2) => a1.Rating.CompareTo(a2.Rating));
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Magazine m && m.Title == Title && m.Count == Count;
+        }
     }
 
     public class MagazineCollection<TKey>
